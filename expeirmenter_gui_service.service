@@ -1,0 +1,24 @@
+#!/bin/bash
+[Unit]
+Description=Node.js Example Server
+#Requires=After=mysql.service       # Requires the mysql service to run first
+
+[Service]
+User=srv_egozi
+Group=service-users
+ExecStart=/bin/node /home/srv_egozi/participants-data-server/server.js
+# Required on some systems
+#WorkingDirectory=/opt/nodeserver
+Restart=always
+# Restart service after 10 seconds if node service crashes
+RestartSec=10
+# Output to syslog
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=nodejs-example
+User=srv_egozi
+Group=wheel
+Environment=NODE_ENV=production PORT=1339
+
+[Install]
+WantedBy=multi-user.target
